@@ -1,8 +1,7 @@
 name: react-native-android-build-apk
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+
 jobs:
   install-and-test:
     runs-on: ubuntu-latest
