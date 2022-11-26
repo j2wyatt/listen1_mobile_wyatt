@@ -74,7 +74,7 @@ class Setting extends React.Component {
             this.flatListRef = ref;
           }}
           keyExtractor={item => item.toString()}
-          data={[1, 2, 3, 4]}
+          data={[1, 2, 3, 4, 5]}
           renderItem={item => {
             if (item.index === 0) {
               return (
@@ -94,6 +94,14 @@ class Setting extends React.Component {
                 <TableCellRow onPress={this.onPressRestore} title="恢复" />
               );
             } else if (item.index === 3) {
+              return (
+                <TableCellRow
+                  onPress={this.onPressAbout}
+                  title="gist 恢复"
+                />
+              );
+            }
+            else if (item.index === 4) {
               return (
                 <TableCellRow
                   onPress={this.onPressAbout}
