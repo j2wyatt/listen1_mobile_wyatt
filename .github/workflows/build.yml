@@ -24,7 +24,7 @@ jobs:
           npm install --force
       - name: Build Android Release
         run: |
-          cd android && chmod +x ./gradlew && ./gradlew assembleRelease
+          cd android && gradlew clean && npm install --force && chmod +x ./gradlew && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
