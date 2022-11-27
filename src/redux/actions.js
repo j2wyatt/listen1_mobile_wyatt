@@ -24,6 +24,7 @@ export const TYPE = {
   ADD_TO_MY_FAVORITE: 'ADD_TO_MY_FAVORITE',
   REMOVE_FROM_MY_FAVORITE: 'REMOVE_FROM_MY_FAVORITE',
   RECOVER_DATA: 'RECOVER_DATA',
+  GIST_ADDRESS: 'GIST_ADDRESS'
 };
 
 export const playTrack = track => ({
@@ -126,4 +127,8 @@ export const removeFromMyFavorite = payload => ({
 export const recoverData = payload => ({
   type: TYPE.RECOVER_DATA,
   payload,
+});
+export const changeGistAddress = gist => ({
+  type: TYPE.GIST_ADDRESS,
+  gist,
 });

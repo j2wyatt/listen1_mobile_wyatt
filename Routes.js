@@ -25,6 +25,7 @@ import ImportPlaylist from './src/views/myplaylist/import-playlist.screen';
 import About from './src/views/setting/about.screen';
 import ImportLocal from './src/views/setting/import-local.screen';
 import ExportLocal from './src/views/setting/export-local.screen';
+import DownGist from './src/views/setting/down-gist.screen';
 
 const MainStack = createStackNavigator(
   {
@@ -54,6 +55,9 @@ const MainStack = createStackNavigator(
     },
     ExportLocal: {
       screen: ExportLocal,
+    },
+    DownGist: {
+      screen: DownGist,
     },
   },
   {

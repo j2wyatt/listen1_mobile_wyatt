@@ -40,12 +40,12 @@ class Setting extends React.Component {
   };
   constructor(props) {
     super(props);
+    this.state = { consoleStr: '' };
     this.onChangeTheme = this.onChangeTheme.bind(this);
     this.onPressAbout = this.onPressAbout.bind(this);
     this.onPressBackup = this.onPressBackup.bind(this);
     this.onPressRestore = this.onPressRestore.bind(this);
-    this.onPressGistAuth = this.onPressGistAuth.bind(this)
-    this.state = {consoleStr: ''}
+    this.onPressGistAuth = this.onPressGistAuth.bind(this);
   }
   onChangeTheme(newValue) {
     let nextTheme = 'black';
@@ -67,10 +67,9 @@ class Setting extends React.Component {
     this.props.navigation.navigate('ImportLocal');
   }
   onPressGistAuth() {
-    this.setState({consoleStr: '蒙古大帝国'})
+    this.props.navigation.navigate('DownGist');
   }
   render() {
-
     return (
       <ThemeFlex>
         <FlatList
@@ -78,7 +77,7 @@ class Setting extends React.Component {
             this.flatListRef = ref;
           }}
           keyExtractor={item => item.toString()}
-          data={[1, 2, 3, 4, 5, 6]}
+          data={[1, 2, 3, 4, 5]}
           renderItem={item => {
             if (item.index === 0) {
               return (
@@ -101,22 +100,14 @@ class Setting extends React.Component {
               return (
                 <TableCellRow
                   onPress={this.onPressGistAuth}
-                  title="gist 恢复"
+                  title="从 gist 恢复"
                 />
               );
-            }
-            else if (item.index === 4) {
+            } else if (item.index === 4) {
               return (
                 <TableCellRow
                   onPress={this.onPressAbout}
                   title="关于 Listen 1"
-                />
-              );
-            }
-            else if (item.index === 5) {
-              return (
-                <TableCellRow
-                  title={this.state.consoleStr}
                 />
               );
             }

@@ -33,12 +33,14 @@ const modalReducer = (
 };
 
 const settingReducer = (
-  state = { language: 'zh_CN', theme: 'white' },
+  state = { language: 'zh_CN', theme: 'white', gist: '' },
   action
 ) => {
   switch (action.type) {
     case TYPE.CHANGE_THEME:
       return { ...state, theme: action.theme };
+    case TYPE.GIST_ADDRESS:
+      return { ...state, gist: action.gist };
     default:
       return state;
   }
