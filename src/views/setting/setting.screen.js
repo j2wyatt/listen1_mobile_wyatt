@@ -78,7 +78,7 @@ class Setting extends React.Component {
             this.flatListRef = ref;
           }}
           keyExtractor={item => item.toString()}
-          data={[1, 2, 3, 4, 5]}
+          data={[1, 2, 3, 4, 5, 6]}
           renderItem={item => {
             if (item.index === 0) {
               return (
@@ -100,7 +100,7 @@ class Setting extends React.Component {
             } else if (item.index === 3) {
               return (
                 <TableCellRow
-                  onPress={this.onPressAbout}
+                  onPress={this.onPressGistAuth}
                   title="gist 恢复"
                 />
               );
@@ -113,13 +113,15 @@ class Setting extends React.Component {
                 />
               );
             }
+            else if (item.index === 5) {
+              return (
+                <PrimaryText> {this.state.consoleStr}</PrimaryText>
+              );
+            }
 
             return null;
           }}
         />
-        <Preview>
-          <PrimaryText> {this.state.consoleStr}</PrimaryText>
-        </Preview>
       </ThemeFlex>
     );
   }
