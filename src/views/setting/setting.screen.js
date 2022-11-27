@@ -44,6 +44,8 @@ class Setting extends React.Component {
     this.onPressAbout = this.onPressAbout.bind(this);
     this.onPressBackup = this.onPressBackup.bind(this);
     this.onPressRestore = this.onPressRestore.bind(this);
+    this.onPressGistAuth = this.onPressGistAuth.bind(this)
+    this.state = {consoleStr: ''}
   }
   onChangeTheme(newValue) {
     let nextTheme = 'black';
@@ -63,6 +65,9 @@ class Setting extends React.Component {
   }
   onPressRestore() {
     this.props.navigation.navigate('ImportLocal');
+  }
+  onPressGistAuth() {
+    this.setState({consoleStr: '蒙古大帝国'})
   }
   render() {
 
@@ -112,6 +117,9 @@ class Setting extends React.Component {
             return null;
           }}
         />
+        <Preview>
+          <PrimaryText> {this.state.consoleStr}</PrimaryText>
+        </Preview>
       </ThemeFlex>
     );
   }
