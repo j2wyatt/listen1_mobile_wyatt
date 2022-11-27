@@ -115,7 +115,9 @@ class Setting extends React.Component {
             }
             else if (item.index === 5) {
               return (
-                <PrimaryText> {this.state.consoleStr}</PrimaryText>
+                <TableCellRow
+                  title={this.state.consoleStr}
+                />
               );
             }
 
