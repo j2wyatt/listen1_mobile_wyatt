@@ -8,6 +8,9 @@
 
 修改同步功能的基本思路就是输入 gist 文件地址，然后读取它，最后覆盖手机歌单
 
+<img src="https://github.com/j-wyatt-a/wyattj.github.io/raw/main/b.jpg" width="300">
+<img src="https://github.com/j-wyatt-a/wyattj.github.io/raw/main/a.jpg" width="300">
+
 ## 使用方法
 
 操作
