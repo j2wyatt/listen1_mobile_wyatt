@@ -32,6 +32,7 @@ class DownGist extends React.Component {
     terMsg: '',
     gistAddress: '',
     gistText: '',
+    inputStyle: {},
   };
 
   constructor(props) {
@@ -39,7 +40,14 @@ class DownGist extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({gistAddress: this.props.settingState.gist})
+    this.setState({ gistAddress: this.props.settingState.gist });
+    this.setState({
+      inputStyle: {
+        borderWidth: 2, height: 40,
+        marginBottom: 40, borderColor: this.props.theme.borderColor,
+      },
+    });
+    console.log(this.props.theme.borderColor);
   }
 
   componentDidMount() {
@@ -92,13 +100,20 @@ class DownGist extends React.Component {
   render() {
     return (
       <ThemeFlex style={{ padding: 20 }}>
-        <Text style={{ fontSize: 20, marginBottom: 10 }}> 填入 GITHUB gist 文件地址：</Text>
+        <Text style={{ fontSize: 20, marginBottom: 10, color: this.props.theme.primaryColor }}> 填入 GITHUB gist
+          文件地址：</Text>
         <TextInput value={this.state.gistAddress} onChangeText={this.handleGistChange}
-                   style={{ borderWidth: 2, height: 40, marginBottom: 40 }}></TextInput>
+                   style={{
+                     borderWidth: 2, height: 40, marginBottom: 40,
+                     borderColor: this.props.theme.borderColor, color: this.props.theme.primaryColor,
+                   }}></TextInput>
         <Button title='恢复到本地' onPress={this.onPressGet} />
-        <Text style={{ fontSize: 15, marginTop: 20 }}> 恢复详情： </Text>
+        <Text style={{ fontSize: 15, marginTop: 20, color: this.props.theme.primaryColor }}> 恢复详情： </Text>
         <Preview>
-          <PrimaryText style={{ borderWidth: 1, minHeight: 100, marginTop: 5 }}> {this.state.terMsg} </PrimaryText>
+          <PrimaryText style={{
+            borderWidth: 1, minHeight: 100, marginTop: 5,
+            borderColor: this.props.theme.borderColor, color: this.props.theme.primaryColor,
+          }}> {this.state.terMsg} </PrimaryText>
         </Preview>
       </ThemeFlex>
     );
