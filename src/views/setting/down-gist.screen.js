@@ -47,7 +47,6 @@ class DownGist extends React.Component {
         marginBottom: 40, borderColor: this.props.theme.borderColor,
       },
     });
-    console.log(this.props.theme.borderColor);
   }
 
   componentDidMount() {
@@ -56,11 +55,31 @@ class DownGist extends React.Component {
 
   onPressGet = async () => {
     this.setState({ terMsg: `开始请求文件...` });
+    let pageText = '';
+    try {
+      pageText = await this.getGist(this.state.gistAddress);
+    } catch (err) {
+      throw err;
+      this.setState({ terMsg: `${this.state.terMsg}\ngist page 请求出错` });
+      return;
+    }
+    this.props.dispatch(changeGistAddress(this.state.gistAddress));
+    this.setState({ terMsg: `${this.state.terMsg}\n取到gist page` });
+    // 取到 json 地址
+    var matchReg = /.*\/.*\/raw.*\/listen1_backup.json/g;
+    let afJ = pageText.match(matchReg);
+    let gUrl = ''
+    if (afJ) {
+      gUrl = 'https://gist.githubusercontent.com/' + afJ;
+    } else {
+      this.setState({ terMsg: `${this.state.terMsg}\n发现 json 地址` });
+      return;
+    }
     let fileText = '';
     try {
-      fileText = await this.getGist(this.state.gistAddress);
+      fileText = await this.getGist(gUrl);
     } catch (err) {
-      this.setState({ terMsg: `${this.state.terMsg}\n请求出错` });
+      this.setState({ terMsg: `${this.state.terMsg}\njson 请求出错` });
       return;
     }
     this.setState({ gistText: fileText });
@@ -79,7 +98,6 @@ class DownGist extends React.Component {
 
   getGist = async (address) => {
     const url = address;
-    this.props.dispatch(changeGistAddress(url));
     let response = await fetch(url);
     let responseJson = await response.text();
     return responseJson;
