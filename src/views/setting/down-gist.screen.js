@@ -54,36 +54,42 @@ class DownGist extends React.Component {
   }
 
   onPressGet = async () => {
-    this.setState({ terMsg: `开始请求文件...` });
+    if(this.state.gistAddress.indexOf('gist.github.com')<0){
+      this.setState({ terMsg: `${this.state.terMsg}\n错误的 gist 仓库地址` });
+    }
+    this.setState({ terMsg: `开始请求 gist page...` });
     let pageText = '';
     try {
       pageText = await this.getGist(this.state.gistAddress);
     } catch (err) {
-      throw err;
-      this.setState({ terMsg: `${this.state.terMsg}\ngist page 请求出错` });
+      this.setState({ terMsg: `${this.state.terMsg}\ngist page 请求出错: ${err.message}` });
+      return;
+    }
+    if (!pageText || pageText.length<1) {
+      this.setState({ terMsg: `${this.state.terMsg}\ngist page 不存在` });
       return;
     }
     this.props.dispatch(changeGistAddress(this.state.gistAddress));
-    this.setState({ terMsg: `${this.state.terMsg}\n取到gist page` });
+    this.setState({ terMsg: `${this.state.terMsg}\n取到 gist page` });
     // 取到 json 地址
-    var matchReg = /.*\/.*\/raw.*\/listen1_backup.json/g;
+    var matchReg = new RegExp('/.*/.*/raw.*/listen1_backup.json');
     let afJ = pageText.match(matchReg);
-    let gUrl = ''
-    if (afJ) {
-      gUrl = 'https://gist.githubusercontent.com/' + afJ;
-    } else {
-      this.setState({ terMsg: `${this.state.terMsg}\n发现 json 地址` });
+    if (!afJ || afJ.length < 1) {
+      this.setState({ terMsg: `${this.state.terMsg}\ngist page 没有发现 json 文件地址` });
       return;
     }
+    this.setState({ terMsg: `${this.state.terMsg}\n发现了 json 歌单地址` });
+    let gUrl = 'https://gist.githubusercontent.com' + afJ[0];
     let fileText = '';
+    this.setState({ terMsg: `${this.state.terMsg}\n开始请求歌单文件` });
     try {
       fileText = await this.getGist(gUrl);
     } catch (err) {
-      this.setState({ terMsg: `${this.state.terMsg}\njson 请求出错` });
+      this.setState({ terMsg: `${this.state.terMsg}\n歌单文件请求出错` });
       return;
     }
     this.setState({ gistText: fileText });
-    this.setState({ terMsg: `${this.state.terMsg}\n取到了文件内容` });
+    this.setState({ terMsg: `${this.state.terMsg}\n取到了歌单文件内容` });
     try {
       JSON.parse(this.state.gistText);
     } catch {
@@ -93,7 +99,7 @@ class DownGist extends React.Component {
     this.setState({ terMsg: `${this.state.terMsg}\n文件内容符合 JSON 格式` });
     this.onPressRecover();
     this.setState({ terMsg: `${this.state.terMsg}\n本地歌单已被覆盖` });
-    this.setState({ terMsg: `${this.state.terMsg}\n歌单恢复成功，请返回查看` });
+    this.setState({ terMsg: `${this.state.terMsg}\n歌单恢复成功，请返回查看\n\n` });
   };
 
   getGist = async (address) => {
@@ -119,7 +125,7 @@ class DownGist extends React.Component {
     return (
       <ThemeFlex style={{ padding: 20 }}>
         <Text style={{ fontSize: 20, marginBottom: 10, color: this.props.theme.primaryColor }}> 填入 GITHUB gist
-          文件地址：</Text>
+          页面地址：</Text>
         <TextInput value={this.state.gistAddress} onChangeText={this.handleGistChange}
                    style={{
                      borderWidth: 2, height: 40, marginBottom: 40,
